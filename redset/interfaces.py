@@ -1,33 +1,38 @@
+from abc import ABC, abstractmethod
 
-import abc
-
-
-class Serializer(object):
+class Serializer(ABC):
     """
-    This is a guideline for implementing a serializer for redset. Serializers
-    need not subclass this directly, but should match the interface defined
-    here.
-
+    A base class defining the interface for Redis serializers.
+    
+    This abstract class provides a guideline for implementing serializers 
+    for redset. While direct subclassing is not required, implementers should
+    match the interface defined here.
     """
-    __metaclass__ = abc.ABCMeta
-
-    @abc.abstractmethod
-    def loads(self, str_from_redis):
+    
+    @abstractmethod
+    def loads(self, str_from_redis: str) -> object:
         """
-        Deserialize a str item from redis into a Python object.
-
-        :param str_from_redis: the str corresponding with an item in redis
-        :type str_from_redis: str
-        :returns: object
-
+        Deserialize a string from Redis into a Python object.
+        
+        Args:
+            str_from_redis: The string retrieved from Redis
+            
+        Returns:
+            The deserialized Python object
+        
         """
-
-    @abc.abstractmethod
-    def dumps(self, obj):
+        pass
+    
+    @abstractmethod
+    def dumps(self, obj: object) -> str:
         """
-        Serialize a Python object into a `str`
-
-        :param obj: the Python object to be stored in a sorted set
-        :returns: str
-
+        Serialize a Python object into a string for Redis storage.
+        
+        Args:
+            obj: The Python object to be stored in a sorted set
+            
+        Returns:
+            The serialized string representation
+            
         """
+        pass
